@@ -16,6 +16,9 @@ export default function Sign() {
   const submitSignUp = () => {
     axios
       .post("http://localhost:4000/auth/signup", {
+        // headers: {
+        //   "Access-Control-Allow-Origin": "http://127.0.0.1:4000",
+        // },
         email: emailUp,
         password: passwordUp,
       })
@@ -25,15 +28,9 @@ export default function Sign() {
   };
 
   const userAuthenticated = () => {
-    axios
-      .get("http://localhost:4000/auth/isUserAuth", {
-        headers: {
-          "x-access-token": localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      });
+    axios.get("http://localhost:4000/auth/isUserAuth", {}).then((response) => {
+      console.log(response);
+    });
   };
   const submitSignIn = () => {
     axios
@@ -45,9 +42,10 @@ export default function Sign() {
         if (!response.data.auth) {
           setSignInStatus(false);
         } else {
-          localStorage.setItem("token", response.data.token);
           setSignInStatus(true);
-          localStorage.setItem("loggedIn", true);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("loggedIn", "true");
+          localStorage.setItem("userId", response.data.id);
         }
       });
   };
