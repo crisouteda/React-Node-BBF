@@ -5,9 +5,10 @@ const bodyParser = require("body-parser");
 router.use(express.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get("/get", (req, res) => {
-  const sqlInsert = " SELECT * FROM item";
-  pool.query(sqlInsert, (err, result) => {
+router.get("/get/:user_id", (req, res) => {
+  const user_id = req.params.user_id;
+  const sqlInsert = " SELECT * FROM item WHERE user_id = ?";
+  pool.query(sqlInsert, user_id, (err, result) => {
     res.send(result);
   });
 });
@@ -15,8 +16,9 @@ router.get("/get", (req, res) => {
 router.post("/insert", (req, res) => {
   const title = req.body.title;
   const author = req.body.author;
-  const sqlInsert = "INSERT INTO item (title, author) VALUES (?,?)";
-  pool.query(sqlInsert, [title, author], (err, result) => {
+  const user_id = req.body.user_id;
+  const sqlInsert = "INSERT INTO item (title, author, user_id) VALUES (?,?,?)";
+  pool.query(sqlInsert, [title, author, user_id], (err, result) => {
     console.log("siiii tot be");
   });
 });
