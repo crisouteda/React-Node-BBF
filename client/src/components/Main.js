@@ -2,24 +2,43 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
 export default function Main() {
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [userId, setUserId] = useState(null);
+
+  const getparams = () => {
+    setLoggedIn(localStorage.getItem("loggedIn"));
+    setUserId(localStorage.getItem("userId"));
+    return userId;
+  };
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [authorList, setauthorList] = useState([]);
   const [newAuthor, setNewAuthor] = useState("");
 
   useEffect(() => {
-    Axios.get("http://localhost:4000/api/get").then((response) => {
-      setauthorList(response.data);
-    });
-  }, []);
+    getparams();
+    async function getItems() {
+      await getparams;
+      await Axios.get(`http://localhost:4000/api/get/${userId}`).then(
+        (response) => {
+          setauthorList(response.data);
+        }
+      );
+    }
+    getItems();
+  }, [userId]);
 
   const submitAuthor = () => {
     Axios.post("http://localhost:4000/api/insert", {
       title: title,
       author: author,
+      user_id: userId,
     });
 
-    setauthorList([...authorList, { title: title, author: author }]);
+    setauthorList([
+      ...authorList,
+      { title: title, author: author, user_id: userId },
+    ]);
   };
 
   const deleteAuthor = (item) => {
@@ -35,7 +54,7 @@ export default function Main() {
   };
   return (
     <div className="App">
-      <h1>CRUD APPLICATION</h1>
+      <h1>CRUD APPLICATION {userId}</h1>
       <div className="form">
         <label>Movie name</label>
         <input
