@@ -2,31 +2,30 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
 export default function Main() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
 
-  const getparams = () => {
-    setLoggedIn(localStorage.getItem("loggedIn"));
-    setUserId(localStorage.getItem("userId"));
-    return userId;
-  };
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [authorList, setauthorList] = useState([]);
   const [newAuthor, setNewAuthor] = useState("");
 
   useEffect(() => {
-    getparams();
-    async function getItems() {
-      await getparams;
-      await Axios.get(`http://localhost:4000/api/get/${userId}`).then(
-        (response) => {
-          setauthorList(response.data);
-        }
-      );
+    if (localStorage.getItem("loggedIn") !== null) {
+      setLoggedIn(true);
     }
-    getItems();
-  }, [userId]);
+    if (localStorage.getItem("userId") !== null) {
+      setUserId(localStorage.getItem("userId"));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userId && loggedIn) {
+      Axios.get(`http://localhost:4000/api/get/${userId}`).then((response) => {
+        setauthorList(response.data);
+      });
+    }
+  }, [loggedIn, userId]);
 
   const submitAuthor = () => {
     Axios.post("http://localhost:4000/api/insert", {
@@ -76,12 +75,12 @@ export default function Main() {
         {authorList.map((val) => {
           return (
             <div className="card">
-              <h1>{val.title}</h1>
-              <p>{val.author}</p>
+              <h1>{val?.title}</h1>
+              <p>{val?.author}</p>
 
               <button
                 onClick={() => {
-                  deleteAuthor(val.id);
+                  deleteAuthor(val?.id);
                 }}
               >
                 Delete
@@ -95,7 +94,7 @@ export default function Main() {
               />
               <button
                 onClick={() => {
-                  updateAuthor(val.id);
+                  updateAuthor(val?.id);
                 }}
               >
                 Update
