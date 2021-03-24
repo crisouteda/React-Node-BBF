@@ -20,7 +20,7 @@ router.use(
   })
 );
 router.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000");
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.header("Access-Control-Allow-Credentials", true);
   next();
@@ -57,7 +57,7 @@ router.post("/signin", (req, res) => {
             expiresIn: 600,
           });
           req.session.user = result;
-          res.json({ auth: true, token: token, result: result }); //everything is sent (even password!!!)
+          res.json({ auth: true, token: token, id: id }); //everything is sent (even password!!!)
         } else {
           res.send({ auth: false, message: "wrong user-password combination" });
         }
