@@ -1,7 +1,19 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 function Profile() {
-  return <div>If you can see this you are authenticate</div>;
-}
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userId, setUserId] = useState("no se sabe");
 
-export default withRouter(Profile);
+  useEffect(() => {
+    setLoggedIn(localStorage.getItem("loggedIn"));
+    setUserId(localStorage.getItem("userId"));
+  }, []);
+
+  return (
+    <div>
+      <h1>If you can see this you are authenticated</h1>
+      <h1>Status: {loggedIn} </h1>
+      {userId && <h1> {userId}</h1>}
+    </div>
+  );
+}
+export default Profile;
