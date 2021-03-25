@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { StateContext } from "./State-context";
 
 export default function Navbar(props) {
   const navStyle = {
     color: "white",
   };
-  const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("loggedIn") !== null) {
-      setLoggedIn(localStorage.getItem("loggedIn"));
-    }
-  }, []);
-
-  const logout = () => {
-    setLoggedIn(localStorage.setItem("loggedIn", false));
-  };
+  const { logged, setLogged } = useContext(StateContext);
 
   return (
     <nav className="topnav">
@@ -32,7 +24,7 @@ export default function Navbar(props) {
         <Link style={navStyle} to="/profile">
           <li>Profile</li>
         </Link>
-        <button onClick={logout}>Logout</button>
+        <button onClick={() => setLogged(false)}>Logout</button>
       </ul>
     </nav>
   );

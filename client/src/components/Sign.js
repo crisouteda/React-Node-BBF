@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import LinkButton from "./LinkButton";
+import { UserContext, StateContext } from "./State-context";
 
 export default function Sign() {
+  const { logged, setLogged } = useContext(StateContext);
+  const { user, setUser } = useContext(UserContext);
+
   const [emailUp, setEmailUp] = useState("");
   const [passwordUp, setPasswordUp] = useState("");
 
   const [emailIn, setEmailIn] = useState("");
   const [passwordIn, setPasswordIn] = useState("");
-
-  const [signInStatus, setSignInStatus] = useState(false);
 
   axios.defaults.withCredentials = true;
 
@@ -40,12 +42,11 @@ export default function Sign() {
       })
       .then((response) => {
         if (!response.data.auth) {
-          setSignInStatus(false);
+          setLogged(false);
         } else {
-          setSignInStatus(true);
+          setLogged(true);
           localStorage.setItem("token", response.data.token);
-          localStorage.setItem("loggedIn", "true");
-          localStorage.setItem("userId", response.data.id);
+          setUser(response.data.id);
         }
       });
   };
@@ -100,7 +101,7 @@ export default function Sign() {
             />
             <button onClick={submitSignIn}>Submit</button>
           </div>
-          {signInStatus === true && (
+          {logged === true && (
             <LinkButton to="/profile" onClick={userAuthenticated}>
               Check authenticated
             </LinkButton>

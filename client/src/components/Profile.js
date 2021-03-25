@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from "react";
-function Profile() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userId, setUserId] = useState("no se sabe");
+import React, { useContext } from "react";
+import { StateContext, UserContext } from "./State-context";
 
-  useEffect(() => {
-    setLoggedIn(localStorage.getItem("loggedIn"));
-    setUserId(localStorage.getItem("userId"));
-  }, []);
+function Profile() {
+  const { logged, setLogged } = useContext(StateContext);
+  const { user, setUser } = useContext(UserContext);
 
   return (
     <div>
       <h1>If you can see this you are authenticated</h1>
-      <h1>Status: {loggedIn} </h1>
-      {userId && <h1> {userId}</h1>}
+      <h1>Status: {logged} </h1>
+      {user && <h1> {user}</h1>}
     </div>
   );
 }
