@@ -1,59 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Axios from "axios";
+import { StateContext, UserContext } from "./State-context";
 
 export default function Main() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
+  const { logged, setLogged } = useContext(StateContext);
+  const { user, setUser } = useContext(UserContext);
 
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [authorList, setauthorList] = useState([]);
   const [newAuthor, setNewAuthor] = useState("");
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (localStorage.getItem("loggedIn") !== null) {
-      setLoggedIn(true);
-    }
-    if (localStorage.getItem("userId") !== null) {
-      setUserId(localStorage.getItem("userId"));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (userId && loggedIn) {
-      Axios.get(`http://localhost:4000/api/get/${userId}`).then((response) => {
+    if (user && logged) {
+      Axios.get(`http://localhost:4000/api/get/${user}`).then((response) => {
         setauthorList(response.data);
       });
     }
-  }, [loggedIn, userId]);
+  }, [count]);
 
   const submitAuthor = () => {
     Axios.post("http://localhost:4000/api/insert", {
       title: title,
       author: author,
-      user_id: userId,
+      user_id: user,
+    }).then(() => {
+      setCount(count + 1);
     });
-
-    setauthorList([
-      ...authorList,
-      { title: title, author: author, user_id: userId },
-    ]);
   };
 
   const deleteAuthor = (item) => {
-    Axios.delete(`http://localhost:4000/api/delete/${item}`);
+    Axios.delete(`http://localhost:4000/api/delete/${item}`).then(() => {
+      setCount(count + 1);
+    });
   };
 
-  const updateAuthor = (item) => {
+  const updateAuthor = (props) => {
     Axios.put("http://localhost:4000/api/update", {
-      id: item.id,
+      id: props,
       author: newAuthor,
+    }).then(() => {
+      setCount(count + 1);
+      // setNewAuthor("");
     });
-    setNewAuthor("");
   };
   return (
     <div className="App">
-      <h1>CRUD APPLICATION {userId}</h1>
+      <h1>CRUD APPLICATION {user}</h1>
       <div className="form">
         <label>Movie name</label>
         <input
@@ -71,16 +65,21 @@ export default function Main() {
             setAuthor(e.target.value);
           }}
         />
-        <button onClick={submitAuthor}>Submit</button>
+        <button
+          onClick={() => {
+            submitAuthor();
+          }}
+        >
+          Submit
+        </button>
         {authorList.map((val) => {
           return (
-            <div className="card">
+            <div className="card" key={val.id}>
               <h1>{val?.title}</h1>
               <p>{val?.author}</p>
-
               <button
                 onClick={() => {
-                  deleteAuthor(val?.id);
+                  deleteAuthor(val.id);
                 }}
               >
                 Delete
@@ -88,13 +87,14 @@ export default function Main() {
               <input
                 type="text"
                 id="updateInput"
+                name="newAuthor"
                 onChange={(e) => {
                   setNewAuthor(e.target.value);
                 }}
               />
               <button
                 onClick={() => {
-                  updateAuthor(val?.id);
+                  updateAuthor(val.id);
                 }}
               >
                 Update
