@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Main from "./components/Main";
-import Footer from "./components/Footer";
-import Sign from "./components/Sign";
-import Home from "./components/Home";
-import Profile from "./components/Profile";
+import Navbar from "./components/Navbar/Navbar";
+import Main from "./components/Main/Main";
+import Footer from "./components/Footer/Footer";
+import Sign from "./components/Sign/Sign";
+import Home from "./components/Home/Home";
+import Profile from "./components/Profile/Profile";
+import { StyledApp } from "./components/Style";
 import { StateContext, UserContext } from "./components/State-context";
 // import Protected from "./components/Protected";
 function App() {
@@ -15,9 +16,9 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        <StateContext.Provider value={{ logged, setLogged }}>
-          <UserContext.Provider value={{ user, setUser }}>
+      <StateContext.Provider value={{ logged, setLogged }}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <StyledApp>
             <Navbar />
             <Switch>
               <Route path="/" exact component={Home} />
@@ -28,10 +29,10 @@ function App() {
                 render={(props) => <Profile {...props} />}
               />
             </Switch>
-          </UserContext.Provider>
-        </StateContext.Provider>
-        <Footer />
-      </div>
+          </StyledApp>
+        </UserContext.Provider>
+      </StateContext.Provider>
+      {/* <Footer /> */}
       {/* <Protected path="/profile" component={Profile} isAuth={loggedIn} /> */}
     </Router>
   );
