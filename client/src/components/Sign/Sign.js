@@ -2,13 +2,10 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import LinkButton from "../LinkButton";
 import { StyledButton, StyledCards, StyledCard } from "../Style";
-
-import { UserContext, StateContext } from "../State-context";
+import { UserContext } from "../UserContext";
 
 export default function Sign() {
-  const { logged, setLogged } = useContext(StateContext);
-  const { user, setUser } = useContext(UserContext);
-
+  const { user, dispatch } = useContext(UserContext);
   const [emailUp, setEmailUp] = useState("");
   const [passwordUp, setPasswordUp] = useState("");
 
@@ -20,9 +17,6 @@ export default function Sign() {
   const submitSignUp = () => {
     axios
       .post("http://localhost:4000/auth/signup", {
-        // headers: {
-        //   "Access-Control-Allow-Origin": "http://127.0.0.1:4000",
-        // },
         email: emailUp,
         password: passwordUp,
       })
@@ -44,11 +38,16 @@ export default function Sign() {
       })
       .then((response) => {
         if (!response.data.auth) {
-          setLogged(false);
         } else {
-          setLogged(true);
-          localStorage.setItem("token", response.data.token);
-          setUser(response.data.id);
+          const token = response.data.token;
+          const id = response.data.id;
+          dispatch({
+            type: "LOG",
+            user: {
+              token,
+              id,
+            },
+          });
         }
       });
   };
@@ -100,7 +99,7 @@ export default function Sign() {
           />
           <StyledButton onClick={submitSignIn}>Submit</StyledButton>
         </div>
-        {logged === true && (
+        {user[0].id !== null && (
           <LinkButton to="/profile" onClick={userAuthenticated}>
             Check authenticated
           </LinkButton>

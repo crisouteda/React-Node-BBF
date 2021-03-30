@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
@@ -8,31 +8,23 @@ import Sign from "./components/Sign/Sign";
 import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import { StyledApp } from "./components/Style";
-import { StateContext, UserContext } from "./components/State-context";
-// import Protected from "./components/Protected";
-function App() {
-  const [logged, setLogged] = useState(false);
-  const [user, setUser] = useState(null);
+import UserProvider from "./components/UserContext";
 
+function App() {
   return (
     <Router>
-      <StateContext.Provider value={{ logged, setLogged }}>
-        <UserContext.Provider value={{ user, setUser }}>
-          <StyledApp>
-            <Navbar />
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/sign" exact component={Sign} />
-              <Route path="/main" exact component={Main} />
-              <Route
-                path="/profile"
-                render={(props) => <Profile {...props} />}
-              />
-            </Switch>
-          </StyledApp>
-        </UserContext.Provider>
-      </StateContext.Provider>
-      {/* <Footer /> */}
+      <StyledApp>
+        <UserProvider>
+          <Navbar />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/sign" exact component={Sign} />
+            <Route path="/main" exact component={Main} />
+            <Route path="/profile" render={(props) => <Profile {...props} />} />
+          </Switch>
+          <Footer />
+        </UserProvider>
+      </StyledApp>
       {/* <Protected path="/profile" component={Profile} isAuth={loggedIn} /> */}
     </Router>
   );

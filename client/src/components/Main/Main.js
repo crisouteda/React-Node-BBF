@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import Axios from "axios";
-import { StateContext, UserContext } from "../State-context";
+import { UserContext } from "../UserContext";
 import { StyledButton, StyledCards, StyledCard } from "../Style";
 
 export default function Main() {
-  const { logged, setLogged } = useContext(StateContext);
-  const { user, setUser } = useContext(UserContext);
-
+  const { user } = useContext(UserContext);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [authorList, setauthorList] = useState([]);
@@ -16,18 +14,20 @@ export default function Main() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (user && logged) {
-      Axios.get(`http://localhost:4000/api/get/${user}`).then((response) => {
-        setauthorList(response.data);
-      });
+    if (user[0].id) {
+      Axios.get(`http://localhost:4000/api/get/${user[0].id}`).then(
+        (response) => {
+          setauthorList(response.data);
+        }
+      );
     }
-  }, [count]);
+  }, [count, user[0].id]);
 
   const submitAuthor = () => {
     Axios.post("http://localhost:4000/api/insert", {
       title: title,
       author: author,
-      user_id: user,
+      user_id: user[0].id,
     }).then(() => {
       setCount(count + 1);
     });
