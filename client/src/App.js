@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
@@ -8,32 +8,36 @@ import Sign from "./components/Sign/Sign";
 import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import { StyledApp } from "./components/Style";
-import { StateContext, UserContext } from "./components/State-context";
-// import Protected from "./components/Protected";
+import UserProvider from "./components/UserContext";
+import ProtectedRoute from "./components/Protected";
+import { UserContext } from "./components/UserContext";
+import CountProvider from "./components/Main/CountContext";
 function App() {
-  const [logged, setLogged] = useState(false);
-  const [user, setUser] = useState(null);
-
+  const { user } = useContext(UserContext);
   return (
     <Router>
-      <StateContext.Provider value={{ logged, setLogged }}>
-        <UserContext.Provider value={{ user, setUser }}>
-          <StyledApp>
-            <Navbar />
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/sign" exact component={Sign} />
-              <Route path="/main" exact component={Main} />
-              <Route
-                path="/profile"
-                render={(props) => <Profile {...props} />}
+      <UserProvider>
+        <StyledApp>
+          <Navbar />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/sign" exact component={Sign} />
+            <CountProvider>
+              <ProtectedRoute
+                path="/main"
+                isAuth={user[0].id}
+                component={Main}
               />
-            </Switch>
-          </StyledApp>
-        </UserContext.Provider>
-      </StateContext.Provider>
-      {/* <Footer /> */}
-      {/* <Protected path="/profile" component={Profile} isAuth={loggedIn} /> */}
+            </CountProvider>
+            <ProtectedRoute
+              path="/profile"
+              isAuth={user[0].id}
+              component={Profile}
+            />
+          </Switch>
+          {/* <Footer /> */}
+        </StyledApp>
+      </UserProvider>
     </Router>
   );
 }
