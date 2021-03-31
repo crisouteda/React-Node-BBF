@@ -26,24 +26,27 @@ const StyledButton = styled.button`
 
 const StyledCards = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  flex-basis: auto;
   width: 100%;
-  // align-self: flex-start;
-  order: 2;
+  border: red solid 2px;
+  order: 1;
   align-content: stretch;
   justify-content: center;
   flex-wrap: wrap;
-  justify-content: center;
   grid-gap: 5%;
   align-items: stretch;
-  flex-direction: row;
+  flex-grow: 1;
 `;
 
 const StyledApp = styled.div`
   display: flex;
-  flex-basis: "auto",
+  flex-basis: auto,
+  border: yellow solid 2px;
   flex-direction: column;
+  flex-grow: 1;
   flex-wrap: wrap;
-  overflow: "hidden",
+  overflow: hidden,
   justify-content: space-between;
   width: 100%;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -56,7 +59,7 @@ const StyledApp = styled.div`
 `;
 
 const StyledCard = styled.div`
-  flex-basis: 25%;
+  flex-basis: ;
   display: flex;
   flex-direction: column;
   justify-content: center;
