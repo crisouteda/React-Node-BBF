@@ -11,7 +11,7 @@ import { StyledApp } from "./components/Style";
 import UserProvider from "./components/UserContext";
 import ProtectedRoute from "./components/Protected";
 import { UserContext } from "./components/UserContext";
-
+import CountProvider from "./components/Main/CountContext";
 function App() {
   const { user } = useContext(UserContext);
   return (
@@ -20,9 +20,15 @@ function App() {
         <StyledApp>
           <Navbar />
           <Switch>
-            <Route path="/" isAuth={user[0].id} component={Home} />
-            <Route path="/sign" isAuth={user[0].id} component={Sign} />
-            <ProtectedRoute path="/main" isAuth={user[0].id} component={Main} />
+            <Route path="/" exact component={Home} />
+            <Route path="/sign" exact component={Sign} />
+            <CountProvider>
+              <ProtectedRoute
+                path="/main"
+                isAuth={user[0].id}
+                component={Main}
+              />
+            </CountProvider>
             <ProtectedRoute
               path="/profile"
               isAuth={user[0].id}
