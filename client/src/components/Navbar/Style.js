@@ -4,7 +4,7 @@ const Style = {
     flexBasis: "auto",
     width: "100%",
     overflow: "hidden",
-    order: 1,
+    order: 0,
     listStyleType: "none",
     padding: 10,
     top: 0,
