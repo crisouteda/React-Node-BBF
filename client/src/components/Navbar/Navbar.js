@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { StyledButton } from "../Style";
+import { Link, Redirect } from "react-router-dom";
+import LinkButton from "../LinkButton";
 import { UserContext } from "../UserContext";
 import Style from "./Style";
 
@@ -28,14 +28,15 @@ export default function Navbar() {
       )}
       {user[0].id !== null && (
         <li>
-          <StyledButton
+          <LinkButton
+            to="/sign"
             onClick={() => {
               dispatch({ type: "UNLOG", id: null });
               localStorage.clear();
             }}
           >
             Logout
-          </StyledButton>
+          </LinkButton>
         </li>
       )}
     </ul>
