@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { StyledCards, StyledCard, StyledButton } from "../Style";
 import { UserContext } from "../UserContext";
+import LinkButton from "../LinkButton";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -8,10 +9,10 @@ const Profile = () => {
     <StyledCards>
       <StyledCard>
         <h1>
-          If you can see this you are authenticated <br /> Status:{user[0].id}
+          If you can see this you are authenticated <br />
         </h1>
         {user[0].id && <h1> {user[0].id}</h1>}
-        <StyledButton>holaaa</StyledButton>
+        <LinkButton to="/main">Organizer</LinkButton>
       </StyledCard>
     </StyledCards>
   );
