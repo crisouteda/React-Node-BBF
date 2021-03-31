@@ -6,8 +6,7 @@ const Home = () => {
   const { user } = useContext(UserContext);
   return (
     <StyledCards>
-      <div>Home</div>
-      return <p>{user[0].id}</p>
+      <div>Wellcome to the review organizer!!</div>
     </StyledCards>
   );
 };
