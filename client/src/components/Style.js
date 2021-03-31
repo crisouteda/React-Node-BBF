@@ -29,7 +29,6 @@ const StyledCards = styled.div`
   flex-wrap: wrap;
   flex-basis: auto;
   width: 100%;
-  border: red solid 2px;
   order: 1;
   align-content: stretch;
   justify-content: center;
@@ -55,17 +54,19 @@ const StyledApp = styled.div`
   align-items: center;
   scroll-behavior: smooth;
   align-content: space-around;
-  font-size: 1.2vw;
+  font-size: 18px;
 `;
 
 const StyledCard = styled.div`
-  flex-basis: ;
+  flex-basis: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   align-content: center;
-  // width: 25%;
+  width: 35%;
+  min-width: 250px;
+  min-height: 50px;
   align-content: center;
   text-align: center;
   vertical-align: middle;
