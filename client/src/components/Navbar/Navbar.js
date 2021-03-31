@@ -26,16 +26,18 @@ export default function Navbar() {
           <li style={Style.li}>Profile</li>
         </Link>
       )}
-      <li>
-        <StyledButton
-          onClick={() => {
-            dispatch({ type: "UNLOG", id: null });
-            localStorage.clear();
-          }}
-        >
-          Logout
-        </StyledButton>
-      </li>
+      {user[0].id !== null && (
+        <li>
+          <StyledButton
+            onClick={() => {
+              dispatch({ type: "UNLOG", id: null });
+              localStorage.clear();
+            }}
+          >
+            Logout
+          </StyledButton>
+        </li>
+      )}
     </ul>
   );
 }
