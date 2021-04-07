@@ -44,8 +44,8 @@ function SignForm({ id, ...rest }) {
   };
   return (
     <div className="form">
-      {id === "signUpInput" && <h1>Sign In</h1>}
-      {id === "signInInput" && <h1>Sign Up</h1>}
+      {id === "signUpInput" && <h1>Sign Up</h1>}
+      {id === "signInInput" && <h1>Sign In</h1>}
       <label>email</label>
       <br />
       <input

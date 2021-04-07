@@ -10,7 +10,7 @@ const StyledButton = styled.button`
   position:  ${(props) => (props.absolute ? "absolute" : "relative")};
   margin-left: ${(props) => props.margin || "none"};
   bottom:  ${(props) => props.bottom || "none"};
-  font-size: 1.2vw;
+  font-size:  12px;
 
 
   :hover {

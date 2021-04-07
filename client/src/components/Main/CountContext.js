@@ -1,16 +1,15 @@
-import React, { createContext } from "react";
+import React, { createContext, useReducer } from "react";
 import { countReducer } from "../reducers/countReducer";
 
 export const CountContext = createContext();
 
-const countProvider = (props) => {
-  const [count, dispatch] = React.useReducer(countReducer, { count: 0 });
+const CountProvider = (props) => {
+  const [count, dispatch] = useReducer(countReducer, { count: 0 });
 
-  const value = { count, dispatch };
   return (
-    <CountContext.Provider value={value}>
+    <CountContext.Provider value={{ count, dispatch }}>
       {props.children}
     </CountContext.Provider>
   );
 };
-export default countProvider;
+export default CountProvider;

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LinkButton from "../LinkButton";
 import { UserContext } from "../UserContext";
 import Style from "./Style";
