@@ -64,6 +64,6 @@ app.use("/api", require("./routes/reviews"));
 // Starting
 app.set("port", process.env.PORT || 4000);
 
-app.listen(process.env.PORT | app.get("port"), () => {
+app.listen(process.env.PORT || app.get("port"), () => {
   console.log("Server is in port", app.get("port"));
 });
