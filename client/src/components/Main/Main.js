@@ -3,7 +3,7 @@ import Axios from "axios";
 import { UserContext } from "../UserContext";
 import { StyledCards } from "../Style";
 import MovieForm from "./MovieForm";
-import UpdateForm from "./UpdateForm";
+import EditForm from "./EditForm";
 import { CountContext } from "./CountContext";
 
 export default function Main() {
@@ -26,7 +26,7 @@ export default function Main() {
     <StyledCards>
       <MovieForm />
       {authorList.map((val) => {
-        return <UpdateForm key={val.id} val={val} />;
+        return <EditForm key={val.id} val={val} />;
       })}
     </StyledCards>
   );
