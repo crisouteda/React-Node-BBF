@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
@@ -10,10 +10,9 @@ import Profile from "./components/Profile/Profile";
 import { StyledApp } from "./components/Style";
 import UserProvider from "./components/UserContext";
 import ProtectedRoute from "./components/Protected";
-import { UserContext } from "./components/UserContext";
 import CountProvider from "./components/Main/CountContext";
+
 function App() {
-  const { user } = useContext(UserContext);
   return (
     <Router>
       <UserProvider>
@@ -23,17 +22,9 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/sign" exact component={Sign} />
             <CountProvider>
-              <ProtectedRoute
-                path="/main"
-                isAuth={user[0].id}
-                component={Main}
-              />
+              <ProtectedRoute path="/main" Component={Main} />
             </CountProvider>
-            <ProtectedRoute
-              path="/profile"
-              isAuth={user[0].id}
-              component={Profile}
-            />
+            <ProtectedRoute path="/profile" Component={Profile} />
           </Switch>
           {/* <Footer /> */}
         </StyledApp>
