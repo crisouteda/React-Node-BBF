@@ -18,19 +18,25 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(
-  cors({
-    origin: ["http://127.0.0.1:3000"],
-    methods: ["GET", "POST", "DELETE", "PUT"],
-    credentials: true,
-  })
-);
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
+// app.use(
+//   cors({
+//     origin: ["http://127.0.0.1:3000"],
+//     methods: ["GET", "POST", "DELETE", "PUT"],
+//     credentials: true,
+//   })
+// );
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000");
+//   res.setHeader("Access-Control-Allow-Headers", "*");
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
+
+app.use(express.static(path.join(__dirname, "../build")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build", "index.html"));
 });
+
 app.use(
   session({
     key: "userId",
