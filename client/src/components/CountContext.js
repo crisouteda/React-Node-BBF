@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { countReducer } from "../reducers/countReducer";
+import { countReducer } from "./reducers/countReducer";
 
 export const CountContext = createContext();
 
