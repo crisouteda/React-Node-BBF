@@ -5,6 +5,7 @@ import { UserContext } from "../UserContext";
 
 function SignForm({ id, ...rest }) {
   const { dispatch } = useContext(UserContext);
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,6 +14,7 @@ function SignForm({ id, ...rest }) {
   const submitSignUp = () => {
     axios
       .post("http://localhost:4000/auth/signup", {
+        username: username,
         email: email,
         password: password,
       })
@@ -32,11 +34,13 @@ function SignForm({ id, ...rest }) {
         } else {
           const token = response.data.token;
           const id = response.data.id;
+          const username = response.data.username;
           dispatch({
             type: "LOG",
             user: {
               token,
               id,
+              username,
             },
           });
         }
@@ -46,6 +50,21 @@ function SignForm({ id, ...rest }) {
     <div className="form">
       {id === "signUpInput" && <h1>Sign Up</h1>}
       {id === "signInInput" && <h1>Sign In</h1>}
+      <br />
+      {id === "signUpInput" && (
+        <div>
+          <label> username</label>
+          <br />
+          <input
+            type="text"
+            name="text"
+            id={id}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+        </div>
+      )}
       <label>email</label>
       <br />
       <input
