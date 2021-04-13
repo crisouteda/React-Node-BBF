@@ -32,11 +32,21 @@ router.delete("/delete/:id", (req, res) => {
   });
 });
 
-router.put("/update", (req, res) => {
+router.put("/updateAuthor", (req, res) => {
   const id = req.body.id;
   const author = req.body.author;
   const sqlUpdate = "UPDATE item SET author = ? WHERE id = ?";
   pool.query(sqlUpdate, [author, id], (err, result) => {
+    res.send("Done");
+    if (err) console.log(err);
+  });
+});
+
+router.put("/updateTitle", (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  const sqlUpdate = "UPDATE item SET title = ? WHERE id = ?";
+  pool.query(sqlUpdate, [title, id], (err, result) => {
     res.send("Done");
     if (err) console.log(err);
   });
