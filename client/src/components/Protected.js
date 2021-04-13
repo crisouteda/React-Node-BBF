@@ -9,7 +9,7 @@ function ProtectedRoute({ Component, ...rest }) {
       <Route
         {...rest}
         render={(props) => {
-          if (user !== "[false]") {
+          if (user[0].id) {
             return <Component />;
           } else {
             return (
