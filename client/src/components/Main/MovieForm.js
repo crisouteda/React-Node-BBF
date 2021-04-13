@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import Axios from "axios";
 import { StyledButton, StyledCard } from "../Style";
 import { UserContext } from "../UserContext";
-import { CountContext } from "./CountContext";
+import { CountContext } from "../CountContext";
 
 function MovieForm({ id, ...rest }) {
   const { user } = useContext(UserContext);
@@ -38,7 +38,7 @@ function MovieForm({ id, ...rest }) {
               setTitle(e.target.value);
             }}
           />
-          <label>Author</label>
+          <label>Director</label>
           <input
             type="text"
             name="author"

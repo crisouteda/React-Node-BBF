@@ -4,7 +4,7 @@ import { UserContext } from "../UserContext";
 import { StyledCards } from "../Style";
 import MovieForm from "./MovieForm";
 import EditForm from "./EditForm";
-import { CountContext } from "./CountContext";
+import { CountContext } from "../CountContext";
 
 export default function Main() {
   const { user } = useContext(UserContext);
@@ -20,7 +20,7 @@ export default function Main() {
         }
       );
     }
-  }, [count, user[0].id]);
+  }, [count]);
 
   return (
     <StyledCards>

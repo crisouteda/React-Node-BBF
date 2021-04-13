@@ -1,11 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import Axios from "axios";
 import { StyledButton, StyledCard } from "../Style";
-import { CountContext } from "./CountContext";
+import { CountContext } from "../CountContext";
 import UpdateForm from "./UpdateForm";
 
 function EditForm({ val, ...rest }) {
-  const [newAuthor, setNewAuthor] = useState("");
   const { dispatch } = useContext(CountContext);
 
   const deleteAuthor = (item) => {
@@ -27,22 +26,13 @@ function EditForm({ val, ...rest }) {
         }}
       >
         <UpdateForm id={val.id} />
-        <div
-          style={{
-            display: "flex",
-            width: "70%",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
+        <StyledButton
+          onClick={() => {
+            deleteAuthor(val.id);
           }}
         >
-          <StyledButton
-            onClick={() => {
-              deleteAuthor(val.id);
-            }}
-          >
-            Delete
-          </StyledButton>
-        </div>
+          Delete
+        </StyledButton>
       </div>
     </StyledCard>
   );

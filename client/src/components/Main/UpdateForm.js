@@ -1,26 +1,36 @@
 import React, { useState, useContext } from "react";
 import Axios from "axios";
-import { StyledButton, StyledCard } from "../Style";
-import { CountContext } from "./CountContext";
+import { StyledButton } from "../Style";
+import { CountContext } from "../CountContext";
 
 function UpdateForm({ id, ...rest }) {
   const [update, setUpdate] = useState(false);
   const [newAuthor, setNewAuthor] = useState("");
+  const [newTitle, setNewTitle] = useState("");
   const { dispatch } = useContext(CountContext);
 
   const updateAuthor = (props) => {
-    Axios.put("http://localhost:4000/api/update", {
+    Axios.put("http://localhost:4000/api/updateAuthor", {
       id: props,
       author: newAuthor,
     }).then(() => {
       dispatch({ type: "increment" });
     });
   };
+
+  const updateTitle = (props) => {
+    Axios.put("http://localhost:4000/api/updateTitle", {
+      id: props,
+      title: newTitle,
+    }).then(() => {
+      dispatch({ type: "increment" });
+    });
+  };
+
   return (
     <div
       style={{
         display: "flex",
-        width: "70%",
         flexDirection: "row",
         justifyContent: "space-evenly",
       }}
@@ -31,7 +41,37 @@ function UpdateForm({ id, ...rest }) {
             <input
               type="text"
               key={id}
-              id={id}
+              name="newTitle"
+              onChange={(e) => {
+                setNewTitle(e.target.value);
+              }}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <StyledButton
+              onClick={() => {
+                updateTitle(id);
+              }}
+            >
+              Update Title
+            </StyledButton>
+          </div>
+        </div>
+      )}
+
+      {update && (
+        <div>
+          <div>
+            <input
+              type="text"
+              key={id}
               name="newAuthor"
               onChange={(e) => {
                 setNewAuthor(e.target.value);
@@ -51,7 +91,7 @@ function UpdateForm({ id, ...rest }) {
                 updateAuthor(id);
               }}
             >
-              Update
+              Update Author
             </StyledButton>
           </div>
         </div>
