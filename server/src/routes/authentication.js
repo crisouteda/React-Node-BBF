@@ -27,14 +27,14 @@ router.use((req, res, next) => {
 });
 // SIGNUP
 router.post("/signup", (req, res) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) {
       console.log(err);
     }
     pool.query(
-      "INSERT INTO users (email, password) VALUES (?,?);",
-      [email, hash],
+      "INSERT INTO users (username, email, password) VALUES (?,?,?);",
+      [username, email, hash],
       (err, result) => {
         console.log(err);
       }
@@ -52,12 +52,13 @@ router.post("/signin", (req, res) => {
     if (result.length > 0) {
       bcrypt.compare(password, result[0].password, (error, response) => {
         if (response) {
+          const username = result[0].username;
           const id = result[0].id;
           const token = jwt.sign({ id }, "sErIOUssEcrEt", {
             expiresIn: 600,
           });
           req.session.user = result;
-          res.json({ auth: true, token: token, id: id }); //everything is sent (even password!!!)
+          res.json({ auth: true, token: token, id: id, username: username }); //everything is sent (even password!!!)
         } else {
           res.send({ auth: false, message: "wrong user-password combination" });
         }
