@@ -5,12 +5,13 @@ export const userReducer = (state, action) => {
         {
           id: action.user.id,
           token: action.user.token,
+          username: action.user.username,
         },
       ];
     case "UNLOG":
       return [
         {
-          id: action.id,
+          user: action.id,
         },
       ];
     default:
