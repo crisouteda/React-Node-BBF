@@ -8,11 +8,9 @@ export default function Profile() {
   return (
     <StyledCards>
       <StyledCard>
-        <h1>
-          por que no baaaaaa If you can see this you are authenticated <br />
-        </h1>
-        {user[0].id && <h1> {user[0].id}</h1>}
-        <LinkButton to="/main">Organizer</LinkButton>
+        {user[0].id && <h1> Wellcome {user[0].username}! </h1>}
+        <br />
+        <LinkButton to="/main">See your Movies!</LinkButton>
       </StyledCard>
     </StyledCards>
   );

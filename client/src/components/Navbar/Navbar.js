@@ -11,22 +11,22 @@ export default function Navbar() {
       <Link to="/">
         <li style={Style.li}>Home</li>
       </Link>
-      {user[0].id !== null && (
+      {user[0].id && (
         <Link to="/main">
           <li style={Style.li}>Main</li>
         </Link>
       )}
-      {user[0].id === null && (
+      {!user[0].id && (
         <Link to="/sign">
           <li style={Style.li}>Sign Up / Sign In</li>
         </Link>
       )}
-      {user[0].id !== null && (
+      {user[0].id && (
         <Link to="/profile">
           <li style={Style.li}>Profile</li>
         </Link>
       )}
-      {user[0].id !== null && (
+      {user[0].id && (
         <li>
           <LinkButton
             to="/sign"

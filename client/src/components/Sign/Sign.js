@@ -22,7 +22,7 @@ export default function Sign() {
       </StyledCard>
       <StyledCard>
         <SignForm id="signInInput" />
-        {user[0].id !== null && (
+        {user[0].id && (
           <LinkButton to="/profile" onClick={userAuthenticated}>
             Check authenticated
           </LinkButton>
