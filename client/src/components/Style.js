@@ -2,15 +2,19 @@ import styled from "styled-components";
 
 const StyledButton = styled.button`
   text-transform: uppercase;
-  padding: 1% 5%;
+  padding: 1 1;
+  max-height: 2 rem;
   border-radius: 4px;
+  border: 1px solid blueviolet;
+  font-weight: bold;
   transition: all 0.4s ease 0s;
   background-image: linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);
   color: #fff !important;
   position:  ${(props) => (props.absolute ? "absolute" : "relative")};
   margin-left: ${(props) => props.margin || "none"};
   bottom:  ${(props) => props.bottom || "none"};
-  font-size:  12px;
+  font-size:  13px;
+  margin: 2px;
 
 
   :hover {
@@ -33,7 +37,7 @@ const StyledCards = styled.div`
   align-content: stretch;
   justify-content: center;
   flex-wrap: wrap;
-  grid-gap: 5%;
+  grid-gap: 1%;
   align-items: stretch;
   flex-grow: 1;
 `;
@@ -50,7 +54,8 @@ const StyledApp = styled.div`
   width: 100%;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: blueviolet;
-  background-color: black;
+  background-color: lightgray;
+
   align-items: center;
   scroll-behavior: smooth;
   align-content: space-around;
@@ -65,28 +70,38 @@ const StyledCard = styled.div`
   align-items: center;
   align-content: center;
   width: 35%;
-  min-width: 250px;
+  min-width: 350px;
   min-height: 50px;
+  // max-height: 300px;
   align-content: center;
   text-align: center;
   vertical-align: middle;
-  background-color: black;
+  background-color: lightgray;
   border: 2px solid blueviolet;
   border-radius: 15px;
-  margin: 2%;
-  padding: 2%;
+  margin: 1%;
+  padding: 1%;
+  transition: all 0.4s ease 0s;
+  :hover {
+    letter-spacing: 5px;
+    transition: all 0.4s ease 0s;
+  }
+  ,
   h1 {
-    margin: 2%;
+    margin: 1%;
   }
   h2 {
-    margin: 2%;
+    margin: 1%;
   }
   input {
-    width: 80%;
-    height: 2;
-    margin: 5%;
+    width: 90%;
+    height: 10px;
+    margin: 2%;
+    padding: 2%;
+    border: 1px solid blueviolet;
+    font-weight: bold;
     float: center;
-    background-color: gainsboro;
+    color: #fff !important;
     background: -webkit-linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);
     background: linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);
     border-radius: 4px;
