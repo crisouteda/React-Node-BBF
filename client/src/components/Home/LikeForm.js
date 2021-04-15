@@ -28,7 +28,7 @@ function LikeForm({ val, ...rest }) {
 
   return (
     <div>
-      <p>{val.email}</p>
+      <p>{val.username}</p>
       {user[0].id && <UpdateForm val={val} likes={likes} dislikes={dislikes} />}
     </div>
   );

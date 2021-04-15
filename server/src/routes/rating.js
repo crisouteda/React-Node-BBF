@@ -7,7 +7,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get("/getAll", (req, res) => {
   const sqlGet =
-    "SELECT item.id , item.title, item.author, users.email FROM item INNER JOIN users ON users.id = item.user_id;";
+    "SELECT item.id , item.title, item.author, users.username FROM item INNER JOIN users ON users.id = item.user_id;";
   pool.query(sqlGet, (err, result) => {
     res.send(result);
   });
@@ -28,7 +28,6 @@ router.get("/setLike/:user/:item", (req, res) => {
   const sqlCount =
     "SELECT count(*) FROM rating WHERE item_id = ? AND user_id = ?;";
   pool.query(sqlCount, [item_id, user_id], (err, result) => {
-    console.log(result);
     res.send(result);
   });
 });
